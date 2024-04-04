@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/Layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <form id="add-form" class="w-96 mx-auto mt-1 bg-indigo-700 grid gap-4 p-10 mb-4 rounded-md">
+    <div class="grid">
+      <label for="title" class="text-white mb-4">Link Title</label>
+      <input type="text" name="title" id="title" class="text-gray-600 outline-none border-none rounded-md">
+    </div>
+    <div class="grid">
+      <label for="description" class="text-white mb-4">Description for Link</label>
+      <textarea name="description" maxlength="160" id="description" class="text-gray-600 outline-none border-none rounded-md"></textarea>
+    </div>
+    <div class="grid">
+      <label for="url" class="text-white mb-4">Link URL</label>
+      <input type="text" name="url" id="url" class="text-gray-600 outline-none border-none rounded-md">
+    </div>
+    <flex class="gap-6 flex flex-wrap text-white mb-4">
+      <div class="grid max-w-fit">
+        <label for="rating" class="mb-4">Rating (1-5)</label>
+        <input type="number" max="5" min="1" name="rating" id="rating" class="text-gray-600 outline-none border-none rounded-md">
+      </div>
+      <div class="grid max-w-fit">
+        <label for="isRead">Is Read</label>
+        <input type="checkbox" name="isRead" id="isRead" class="text-indigo-500 outline-none border-none rounded-md">
+      </div>
+    </flex>
+    <button class="bg-white text-indigo-700 px-6 py-2 max-w-fit rounded font-medium">Add link</button>
+  </form>
+  
+</BaseLayout>
+
+<script>
+
+  const addForm = document.querySelector("#add-form") as HTMLFormElement;
+
+  addForm.addEventListener("submit", async (e) => {
+    e.preventDefault();    
+    const formData = new FormData(addForm);
+    const values = Object.fromEntries(formData)
+
+    try{
+      const res = await fetch("/api/addLink.json", {
+        method: "POST",
+        headers: { 
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(values)
+      })
+      const { sucess, message } = await res.json();
+      if(sucess){
+        console.log(message)
+      }else {
+        throw new Error(message)
+      }
+
+    } catch(e) {
+      console.error(e);
+    }
+  })
+
+</script>

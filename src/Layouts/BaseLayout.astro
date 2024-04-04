@@ -1,0 +1,26 @@
+---
+import { metaData } from "../Data/metaData"
+
+const { title = metaData.title, description = metaData.description } = Astro.props
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+    <meta name="" content={description} />
+		<title>{title}</title>
+	</head>
+	<body class="grid gap-6">
+		<nav class="container flex items-center justify-between py-6 bg-indigo-700">
+      <a class="text-white font-semibold" href="/">Go Home</a>
+      <a class="text-white font-semibold" href="add">Add</a>
+    </nav>
+		<main class="container grid gap-6">
+		 <slot/>
+		</main>
+	</body>
+</html>

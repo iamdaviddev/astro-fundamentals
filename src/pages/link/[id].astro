@@ -1,0 +1,16 @@
+---
+import BaseLayout from "@/Layouts/BaseLayout.astro";
+import type { Links } from "@/types/Links";
+
+const { id } = Astro.params;
+
+const res = await fetch(`${Astro.url.origin}/api/getLink.json${id}`)
+
+const { data } = await res.json();
+---
+
+<BaseLayout>
+	<ul class="">
+		{data.map((i: Links) => <li class="mb-3">{i.title}</li>)}
+	</ul>
+</BaseLayout>
